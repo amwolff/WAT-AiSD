@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 struct node {
     int data;
@@ -112,6 +113,8 @@ void traverse_left_and_print(struct node *head) {
 }
 
 int main() {
+    srand(time(NULL));
+
     struct node *root = malloc(sizeof(struct node));
     root->next = root;
     root->prev = root;
@@ -128,11 +131,22 @@ int main() {
     printf("Wartość k:\n> ");
     scanf("%d", &k);
 
-    root->data = -1;
-    for (int i = 0; i < m; ++i) {
-        push(root, i);
+    root->data = rand();
+    for (int i = 1; i < m; ++i) {
+        push(root, rand());
     }
 
-    free(root);
+    if (kier == 'l') {
+        traverse_left_and_print(root);
+        printf("\n\n");
+        move_left(root, n, k);
+        traverse_left_and_print(root);
+    } else {
+        traverse_right_and_print(root);
+        printf("\n\n");
+        move_right(root, n, k);
+        traverse_right_and_print(root);
+    }
+
     return 0;
 }
